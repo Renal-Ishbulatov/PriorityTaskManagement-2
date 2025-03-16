@@ -114,7 +114,7 @@ namespace PriorityTaskManagement_2
             tasksListBox.Items.Clear();
             foreach (var task in taskManager.Tasks)
             {
-                string status = task.IsCompleted ? "[X]" : "[ )";
+                string status = task.IsCompleted ? "[X]" : "[ ]";
                 tasksListBox.Items.Add($"{status} {task.Description} (Приоритет: {task.Priority})");
             }
         }
@@ -154,8 +154,7 @@ namespace PriorityTaskManagement_2
             string[] parts = selectedItem.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             if (parts.Length >= 3)
             {
-                string description = parts[2];
-                var taskToRemove = taskManager.Tasks.Find(t => t.Description == description);
+                var taskToRemove = taskManager.Tasks[tasksListBox.SelectedIndex];
                 if (taskToRemove != null)
                 {
                     try
@@ -178,12 +177,14 @@ namespace PriorityTaskManagement_2
                 MessageBox.Show("Выберите задачу для изменения статуса!");
                 return;
             }
-            string selectedItem = tasksListBox.SelectedItem.ToString();
-            string[] parts = selectedItem.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            if (parts.Length >= 3)
+
+            var selectedItem = tasksListBox.SelectedItem.ToString();
+            var match = System.Text.RegularExpressions.Regex.Match(selectedItem, @"\[(.*?)\]\s+(.*?)\s+\(Приоритет:");
+            if (match.Success)
             {
-                string description = parts[2];
-                var taskToToggle = taskManager.Tasks.Find(t => t.Description == description);
+                string description = match.Groups[2].Value;
+                TaskWithPriority taskToToggle = taskManager.Tasks.FirstOrDefault(t => t.Description == description);
+
                 if (taskToToggle != null)
                 {
                     try
@@ -196,8 +197,13 @@ namespace PriorityTaskManagement_2
                         MessageBox.Show(ex.Message);
                     }
                 }
+                else
+                {
+                    MessageBox.Show("Задача не найдена!");
+                }
             }
         }
+
 
         private void SortByPriorityButton_Click(object sender, EventArgs e)
         {
