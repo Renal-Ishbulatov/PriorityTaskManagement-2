@@ -143,6 +143,7 @@ namespace PriorityTaskManagement_2
             }
         }
 
+        //Исправлена кнопка "Удалить"
         private void RemoveTaskButton_Click(object sender, EventArgs e)
         {
             if (tasksListBox.SelectedIndex == -1)
@@ -170,6 +171,7 @@ namespace PriorityTaskManagement_2
             }
         }
 
+        //Исправлена кнопка "Отметить"
         private void ToggleCompletionButton_Click(object sender, EventArgs e)
         {
             if (tasksListBox.SelectedIndex == -1)
