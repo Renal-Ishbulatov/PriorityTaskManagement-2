@@ -71,8 +71,7 @@ namespace TaskWithPriorityClass
                         int priority;
                         bool isCompleted;
                         DateTime deadline;
-                        if (int.TryParse(parts[1], out priority) && bool.TryParse(parts[2], out
-    isCompleted) && DateTime.TryParse(parts[3], out deadline))
+                        if (int.TryParse(parts[1], out priority) && bool.TryParse(parts[2], out isCompleted) && DateTime.TryParse(parts[3], out deadline))
                         {
                             TaskWithPriority task = new TaskWithPriority(parts[0], (Priority)priority,
     deadline);
