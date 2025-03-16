@@ -29,6 +29,7 @@ namespace PriorityTaskManagement_2
             this.Text = "Управление задачами с приоритетом";
             this.Width = 600;
             this.Height = 500;
+            this.BackColor = Color.Yellow;
 
             descriptionTextBox = new TextBox
             {
